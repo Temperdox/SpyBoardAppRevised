@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="">
+  <meta property="og:type" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="icon.png">
+  <!-- Place favicon.ico in the root directory -->
+
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/lockScreen.css">
+  <link rel="stylesheet" href="css/mainScreen.css">
+  <link rel="stylesheet" href="css/transToMain.css">
+  <link href="fontawesome/css/fontawesome.css" rel="stylesheet">
+  <link href="fontawesome/css/brands.css" rel="stylesheet">
+  <link href="fontawesome/css/solid.css" rel="stylesheet">
+
+  <meta name="theme-color" content="#fafafa">
+</head>
+
+<body>
+  <div id="app">
+    <div id="background" class="day smooth-scroll"></div>
+    <div id="lock-view" class="view">
+      <div id="lock-view-signin-prompt-container" class="view">
+        <input id="pin-hidden-input" maxlength="4" type="number" value="" onkeyup="" class="no-select">
+        <div id="pin" class="" onclick="focused('pin-hidden-input')">
+          <div class="pin-digit clear square no-select focused" >
+            <span class="pin-digit-value"></span>
+          </div>
+          <div class="pin-digit clear square no-select">
+            <span class="pin-digit-value"></span>
+          </div>
+          <div class="pin-digit clear square no-select">
+            <span class="pin-digit-value"></span>
+          </div>
+          <div class="pin-digit clear square no-select">
+            <span class="pin-digit-value"></span>
+          </div>
+        </div>
+        <div id="lock-view-signin-text-container" class="no-select col">
+          <div class="col">
+            <div id="loginError" class="error fade-out"><span>Incorrect pin, please try again</span></div>
+            <div id="createAccountTip" class="fade-in" onclick="switchView(views.signUp)"><span>Don't have an account? Click here!</span></div>
+          </div>
+          <div class="row">
+            <div class="loginText"><span onclick="switchView(views.signUp),focused('pin-hidden-input')">Sign Up</span></div>
+            <div class="loginText"><span onclick="switchView(views.splash), resetPin()">Cancel</span></div>
+          </div>
+        </div>
+      </div>
+      <div id="lock-view-signup-prompt-container" class="view clear square">
+        <div id="splash-view-signup-cancel-button" class="button rounded fa-solid fa-arrow-right-to-bracket" onclick="switchView(views.signIn), focused('pin-hidden-input')"></div>
+        <div class="title"><span>Notice! Upon creating an account, you must wait until an authorized administrator approves your request.</span></div>
+      </div>
+      <div id="splash-view" class="view">
+        <div id="splash-view-date-time" class="no-select">
+          <div id="splash-time" class="title"><span>20:57</span></div>
+          <div id="splash-date" class="title"><span>06 Dec 22</span></div>
+        </div>
+        <div id="splash-view-notification-container">
+          <div class="notification-group">
+            <div class="notification">
+              <div class="notification-header">
+                <span class="notification-title">Test title</span>
+                <span class="notification-time-stamp"></span>
+              </div>
+              <div class="notification-icon"></div>
+              <div class="notification-message"></div>
+            </div>
+          </div>
+        </div>
+        <div id="splash-view-signin-button" class="button bounce rounded fa-solid fa-arrow-right-to-bracket" onclick="switchView(views.signIn), focused('pin-hidden-input')"></div>
+      </div>
+    </div>
+    <div id="loading-view" class="view loadingSpinner fa-spin"></div>
+    <div id="home-view" class="view ">
+      <div id="home-view-notification-container" class="view"></div>
+      <div id="home-view-settings-container" class="view"></div>
+      <div id="home-view-nav-container"></div>
+      <div id="home-view-signout-button" class="button bounce rounded fa-solid fa-arrow-right-to-bracket" onclick="switchView(views.splash), focused('pin-hidden-input'), resetScroll()"></div>
+      <div id="home-view-container" class="smooth-scroll">
+        <div id="dashboard" class="section">
+          <div class="page-wrap v-center">
+            <div class="content-wrap">
+              <h3>Sun Dial</h3>
+              <svg width="200" height="100" viewbox="0 0 100 45" xmlns="http://www.w3.org/2000/svg">
+                <path id="sunPath" d="M10 30 C 30 5, 70 5, 90 30" stroke="black" fill="transparent"/>
+                <g id="sunEl" style="transform: translate(10px, 30px);">
+                  <circle r="5"/>
+                </g>
+                <g class="text-fields">
+                  <text id="sunrise">rise</text>
+                  <text id="time">curTime</text>
+                  <text id="sunset">set</text>
+                </g>
+              </svg>
+            </div>
+          </div>
+          <div id="home-header-container" class="smooth-scroll">
+
+            <div id="home-view-header" class="title smooth-scroll"><span>Welcome back! </span><span></span></div>
+
+          </div>
+        </div>
+
+        <div id="main" class="section clear square smooth-scroll">
+          <div id="main-content">
+            <!--<div id="fault-preview" class="square"></div>
+            <div id="schedule-preview" class="square"></div>
+            <div id="-preview" class="square"></div>
+            <div id="fault-preview" class="square"></div>
+            <div id="fault-preview" class="square"></div>
+            <div id="fault-preview" class="square"></div>-->
+          </div>
+        </div>
+        <div id="faults" class="section clear square smooth-scroll">
+
+        </div>
+        <div id="schedule" class="section clear square smooth-scroll">
+
+        </div>
+        <div id="todo" class="section clear square smooth-scroll">
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Add your site or application content here -->
+  <script src="js/jquery-3.6.1.min.js"></script>
+  <script src="js/vendor/modernizr-3.11.2.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/viewControl.js"></script>
+  <script src="js/appRunner.js"></script>
+  <script src="js/pinHandler.js"></script>
+  <script src="js/dateTimeHandler.js"></script>
+  <script src="js/bcrypt.js"></script>
+  <script src="js/keyListeners.mjs"></script>
+  <script src="js/navigation.js"></script>
+</body>
+
+</html>
